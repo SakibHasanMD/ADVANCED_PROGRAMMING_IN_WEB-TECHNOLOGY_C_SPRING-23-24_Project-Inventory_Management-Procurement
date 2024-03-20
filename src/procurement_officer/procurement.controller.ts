@@ -1,9 +1,9 @@
 import { Body, Controller, Get, Param, Post, Query, UsePipes, ValidationPipe } from "@nestjs/common";
 import { ProcurementService } from "./procurement.services";
-import { ProcurementDTO } from "../DTO/procurement.dto";
+import { ProcurementDTO } from "./DTO/procurement.dto";
 
 
-@Controller('/procurement')
+@Controller('procurement')
 export class ProcurementController{
     constructor(private readonly procurementService: ProcurementService){}
   

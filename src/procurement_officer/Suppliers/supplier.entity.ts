@@ -1,0 +1,23 @@
+// supplier.entity.ts
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+
+@Entity()
+export class SupplierEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  name: string;
+
+  @Column()
+  contactPerson: string;
+
+  @Column()
+  email: string;
+
+  @Column()
+  phoneNumber: string;
+
+  @Column()
+  address: string;
+}

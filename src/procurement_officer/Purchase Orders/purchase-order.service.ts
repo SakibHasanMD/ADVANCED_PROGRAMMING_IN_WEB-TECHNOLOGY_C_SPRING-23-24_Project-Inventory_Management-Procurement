@@ -22,9 +22,6 @@ export class PurchaseOrderService {
 
   async getPurchaseOrderById(id: number): Promise<PurchaseOrderDto> {
     const purchaseOrder = await this.purchaseOrderRepository.findOne({ where: { id } });
-    if (!purchaseOrder) {
-      throw new NotFoundException('Purchase order not found');
-    }
     return purchaseOrder;
   }
 
@@ -36,8 +33,6 @@ export class PurchaseOrderService {
 
   async deletePurchaseOrder(id: number): Promise<void> {
     const result = await this.purchaseOrderRepository.delete(id);
-    if (result.affected === 0) {
-      throw new NotFoundException('Purchase order not found');
-    }
+
   }
 }
