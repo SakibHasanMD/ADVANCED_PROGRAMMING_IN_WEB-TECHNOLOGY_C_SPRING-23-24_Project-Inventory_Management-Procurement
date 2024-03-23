@@ -7,22 +7,31 @@ import { ProcurementDTO } from "./DTO/procurement.dto";
 export class ProcurementController{
     constructor(private readonly procurementService: ProcurementService){}
   
-    @Get('users/:id')
-    getUsersById(@Param('id') id: string): object{
-        return this.procurementService.getUsersById(id);
-    }
-
-    @Get('users/')
-    getUsersByNameAndId(@Query('name') name: string, 
-    @Query('id') id:string) : object{
-        return this.procurementService.getUsersByNameAndId(name, id);
+    
+    @Get('viewprofile')
+    getProfile() {
+        // Retrieve procurement officer's profile
+        return this.procurementService.viewProfile();
     }
 
     @Post('updateprofile')
     @UsePipes(new ValidationPipe)
-    async updateUser(@Body() myobj: ProcurementDTO): Promise<ProcurementDTO>{
-        console.log(myobj.name);
-        return this.procurementService.updateUser(myobj);
+    async updateUser(@Body() userinfo: ProcurementDTO): Promise<ProcurementDTO>{
+        return this.procurementService.updateUser(userinfo);
     }
+
+    //Old LabTask Codes
+    // @Get('users/:id')
+    // getUsersById(@Param('id') id: string): object{
+    //     return this.procurementService.getUsersById(id);
+    // }
+
+    // @Get('users/')
+    // getUsersByNameAndId(@Query('name') name: string, 
+
+    
+    // @Query('id') id:string) : object{
+    //     return this.procurementService.getUsersByNameAndId(name, id);
+    // }
    
 }

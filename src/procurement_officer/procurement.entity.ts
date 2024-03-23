@@ -6,14 +6,23 @@ export class ProcurementEntity{
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ default: true , type:'boolean'})
-    isActive: boolean;
+    @Column({type:'varchar' })
+    name: string;
 
-    @Column({ nullable: true ,type:'varchar' })
-    fullName: string;
+    @Column()
+    email: string;
 
-    @Column({ type: 'bigint', unsigned: true })
+    @Column()
+    password: string;
+
+    @Column()
     phone: number;
+
+    @Column({ type:'varchar'})
+    profilePicture: string;
+
+    @Column()
+    address: string;
 
     @BeforeInsert()
     generateId() {

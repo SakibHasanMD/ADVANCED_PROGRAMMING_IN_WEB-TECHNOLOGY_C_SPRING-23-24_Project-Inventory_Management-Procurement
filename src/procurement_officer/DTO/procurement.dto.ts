@@ -1,8 +1,11 @@
 export class ProcurementDTO{
-    name:string;
     id:number;
+    name:string;
+    password: string;
+    phone:string;
     email:string;
     address:string;
+    profilePicture: string;
 
 }
 
