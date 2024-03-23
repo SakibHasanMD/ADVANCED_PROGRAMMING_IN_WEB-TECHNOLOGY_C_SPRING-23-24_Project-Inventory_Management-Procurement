@@ -23,10 +23,8 @@ constructor(@InjectRepository(ProcurementEntity) private procurementReposetory: 
     return this.profile;
     }
 
-    async updateUser(myobj:ProcurementDTO):Promise<ProcurementDTO>{
-        console.log(myobj.name);
-        return myobj;
-    
+    async updateUser(updatedUserInfo:ProcurementDTO):Promise<ProcurementDTO>{
+        return updatedUserInfo;
     }
     //Old lab Task
     // getUsersById(id: string): object {
