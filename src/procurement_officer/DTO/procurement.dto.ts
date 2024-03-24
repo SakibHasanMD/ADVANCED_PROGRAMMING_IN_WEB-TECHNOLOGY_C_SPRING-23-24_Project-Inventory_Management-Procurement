@@ -26,4 +26,7 @@ export class ProcurementDTO {
 
     profilePicture: string;
 }
-
+export class LoginDTO{
+    @IsEmail() email: string;
+    @IsNotEmpty() password: string;    
+}

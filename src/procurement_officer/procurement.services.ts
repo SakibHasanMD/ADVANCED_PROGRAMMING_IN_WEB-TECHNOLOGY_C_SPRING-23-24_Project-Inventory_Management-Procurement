@@ -6,7 +6,7 @@ import { Repository } from "typeorm";
 
 @Injectable()
 export class ProcurementService{
-constructor(@InjectRepository(ProcurementEntity) private procurementReposetory: Repository<ProcurementEntity>){}  
+constructor(@InjectRepository(ProcurementEntity) private procurementRepository: Repository<ProcurementEntity>){}  
 
     
     profile: ProcurementDTO= {
@@ -17,6 +17,7 @@ constructor(@InjectRepository(ProcurementEntity) private procurementReposetory: 
     name: 'John Doe',
     profilePicture:'xyz.jpg',
     email: 'john.doe@example.com',
+    
     };
 
     viewProfile() {
@@ -26,6 +27,16 @@ constructor(@InjectRepository(ProcurementEntity) private procurementReposetory: 
     async updateUser(updatedUserInfo:ProcurementDTO):Promise<ProcurementDTO>{
         return updatedUserInfo;
     }
+
+    async addProcurementOfficer(procurementOfficerData: ProcurementDTO): Promise<ProcurementDTO> {
+        const procurementOfficer = this.procurementRepository.create(procurementOfficerData);
+        return await this.procurementRepository.save(procurementOfficer);
+      }
+    
+      async findOneByEmail(email: string): Promise<ProcurementEntity> {
+        return this.procurementRepository.findOne({ where: { email } });
+      }
+      
     //Old lab Task
     // getUsersById(id: string): object {
     //     return {massage: "Your id is" + id};
@@ -38,21 +49,21 @@ constructor(@InjectRepository(ProcurementEntity) private procurementReposetory: 
     // }
 
     // async createUser(user: ProcurementEntity): Promise<ProcurementEntity> {
-    //     return await this.procurementReposetory.save(user);
+    //     return await this.procurementRepository.save(user);
     // }
 
     // async removeUserById(userId: number): Promise<void> {
-    //     await this.procurementReposetory.delete(userId);
+    //     await this.procurementRepository.delete(userId);
     // }
 
     // async getUsersWithFullName(): Promise<ProcurementEntity[]> {
 
-    //     return await this.procurementReposetory.find({ where: { name: null } });
+    //     return await this.procurementRepository.find({ where: { name: null } });
     // }
 
      // async updatePhoneNumber(id: number, user: ProcurementEntity): Promise<ProcurementEntity> {
-     //     await this.procurementReposetory.update(id,this.updatePhoneNumber);
-     //     return  this.procurementReposetory.findOneBy({id:id});
+     //     await this.procurementRepository.update(id,this.updatePhoneNumber);
+     //     return  this.procurementRepository.findOneBy({id:id});
      // }
 
  

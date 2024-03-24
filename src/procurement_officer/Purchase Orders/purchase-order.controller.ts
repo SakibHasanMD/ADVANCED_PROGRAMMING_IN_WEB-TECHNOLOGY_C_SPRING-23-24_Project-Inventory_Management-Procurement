@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe, HttpException, HttpStatus } from '@nestjs/common';
 import { PurchaseOrderService } from './purchase-order.service';
 import { PurchaseOrderDto } from '../DTO/purchase-order.dto';
 
@@ -7,34 +7,58 @@ export class PurchaseOrderController {
   constructor(private readonly purchaseOrderService: PurchaseOrderService) {}
 
   @Get()
-  getAllPurchaseOrders(): Promise<PurchaseOrderDto[]> {
-    return this.purchaseOrderService.getAllPurchaseOrders();
+  async getAllPurchaseOrders(): Promise<PurchaseOrderDto[]> {
+    try {
+      return await this.purchaseOrderService.getAllPurchaseOrders();
+    } catch (error) {
+      throw new HttpException('Error fetching purchase orders', HttpStatus.BAD_REQUEST);
+    }
   }
 
   @Post()
   @UsePipes(new ValidationPipe())
-  createPurchaseOrder(@Body() purchaseOrderDto: PurchaseOrderDto): Promise<PurchaseOrderDto> {
-    return this.purchaseOrderService.createPurchaseOrder(purchaseOrderDto);
+  async createPurchaseOrder(@Body() purchaseOrderDto: PurchaseOrderDto): Promise<PurchaseOrderDto> {
+    try {
+      return await this.purchaseOrderService.createPurchaseOrder(purchaseOrderDto);
+    } catch (error) {
+      throw new HttpException('Error creating purchase order', HttpStatus.BAD_REQUEST);
+    }
   }
 
   @Get(':id')
-  getPurchaseOrderById(@Param('id') id: number): Promise<PurchaseOrderDto> {
-    return this.purchaseOrderService.getPurchaseOrderById(id);
+  async getPurchaseOrderById(@Param('id') id: number): Promise<PurchaseOrderDto> {
+    try {
+      return await this.purchaseOrderService.getPurchaseOrderById(id);
+    } catch (error) {
+      throw new HttpException(`Purchase order with id ${id} not found`, HttpStatus.NOT_FOUND);
+    }
   }
 
   @Put(':id')
   @UsePipes(new ValidationPipe())
-  updatePurchaseOrder(@Param('id') id: number, @Body() purchaseOrderDto: PurchaseOrderDto): Promise<PurchaseOrderDto> {
-    return this.purchaseOrderService.updatePurchaseOrder(id, purchaseOrderDto);
+  async updatePurchaseOrder(@Param('id') id: number, @Body() purchaseOrderDto: PurchaseOrderDto): Promise<PurchaseOrderDto> {
+    try {
+      return await this.purchaseOrderService.updatePurchaseOrder(id, purchaseOrderDto);
+    } catch (error) {
+      throw new HttpException(`Error updating purchase order with id ${id}`, HttpStatus.BAD_REQUEST);
+    }
   }
 
   @Delete(':id')
-  deletePurchaseOrder(@Param('id') id: number): Promise<void> {
-    return this.purchaseOrderService.deletePurchaseOrder(id);
+  async deletePurchaseOrder(@Param('id') id: number): Promise<void> {
+    try {
+      await this.purchaseOrderService.deletePurchaseOrder(id);
+    } catch (error) {
+      throw new HttpException(`Error deleting purchase order with id ${id}`, HttpStatus.BAD_REQUEST);
+    }
   }
 
   @Get('getbysupplierid/:id')
   async getPurchaseOrder(@Param('id') id: number) {
-    return this.purchaseOrderService.getPurchaseOrderWithSupplier(id);
+    try {
+      return await this.purchaseOrderService.getPurchaseOrderWithSupplier(id);
+    } catch (error) {
+      throw new HttpException(`Error fetching purchase order with supplier id ${id}`, HttpStatus.BAD_REQUEST);
+    }
   }
 }

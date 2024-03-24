@@ -16,7 +16,7 @@ export class ProcurementEntity{
     password: string;
 
     @Column()
-    phone: number;
+    phone: string;
 
     @Column({ type:'varchar'})
     profilePicture: string;

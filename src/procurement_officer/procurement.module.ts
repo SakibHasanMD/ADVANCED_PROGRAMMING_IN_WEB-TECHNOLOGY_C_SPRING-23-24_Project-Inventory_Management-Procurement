@@ -4,6 +4,7 @@ import { ProcurementController } from "./procurement.controller";
 import { ProcurementService } from "./procurement.services";
 import { ProcurementEntity } from "./procurement.entity";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { AuthService } from "./Auth/auth.service";
 
 @Module({
 
@@ -11,8 +12,9 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 
     controllers: [ProcurementController],
 
-    providers: [ProcurementService],
-
+    providers: [ProcurementService,AuthService],
+    
+    exports: [ProcurementService],
   })
 
   export class ProcurementModule {}

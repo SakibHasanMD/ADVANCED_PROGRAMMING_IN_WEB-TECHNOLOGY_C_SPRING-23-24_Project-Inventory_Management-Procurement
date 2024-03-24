@@ -1,5 +1,4 @@
-// supplier.controller.ts
-import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UsePipes, ValidationPipe, HttpException, HttpStatus } from '@nestjs/common';
 import { SupplierDto } from '../DTO/supplier.dto';
 import { SupplierService } from './supplier.service';
 
@@ -8,29 +7,49 @@ export class SupplierController {
   constructor(private readonly supplierService: SupplierService) {}
 
   @Get()
-  getAllSuppliers(): Promise<SupplierDto[]> {
-    return this.supplierService.getAllSuppliers();
+  async getAllSuppliers(): Promise<SupplierDto[]> {
+    try {
+      return await this.supplierService.getAllSuppliers();
+    } catch (error) {
+      throw new HttpException('Error fetching suppliers', HttpStatus.BAD_REQUEST);
+    }
   }
 
   @Get(':id')
-  getSupplierById(@Param('id') id: number): Promise<SupplierDto> {
-    return this.supplierService.getSupplierById(id);
+  async getSupplierById(@Param('id') id: number): Promise<SupplierDto> {
+    try {
+      return await this.supplierService.getSupplierById(id);
+    } catch (error) {
+      throw new HttpException(`Supplier with id ${id} not found`, HttpStatus.NOT_FOUND);
+    }
   }
 
   @Post()
   @UsePipes(new ValidationPipe())
-  createSupplier(@Body() supplierDto: SupplierDto): Promise<SupplierDto> {
-    return this.supplierService.createSupplier(supplierDto);
+  async createSupplier(@Body() supplierDto: SupplierDto): Promise<SupplierDto> {
+    try {
+      return await this.supplierService.createSupplier(supplierDto);
+    } catch (error) {
+      throw new HttpException('Error creating supplier', HttpStatus.BAD_REQUEST);
+    }
   }
 
   @Put(':id')
   @UsePipes(new ValidationPipe())
-  updateSupplier(@Param('id') id: number, @Body() supplierDto: SupplierDto): Promise<SupplierDto> {
-    return this.supplierService.updateSupplier(id, supplierDto);
+  async updateSupplier(@Param('id') id: number, @Body() supplierDto: SupplierDto): Promise<SupplierDto> {
+    try {
+      return await this.supplierService.updateSupplier(id, supplierDto);
+    } catch (error) {
+      throw new HttpException(`Error updating supplier with id ${id}`, HttpStatus.BAD_REQUEST);
+    }
   }
 
   @Delete(':id')
-  deleteSupplier(@Param('id') id: number): Promise<void> {
-    return this.supplierService.deleteSupplier(id);
+  async deleteSupplier(@Param('id') id: number): Promise<void> {
+    try {
+      await this.supplierService.deleteSupplier(id);
+    } catch (error) {
+      throw new HttpException(`Error deleting supplier with id ${id}`, HttpStatus.BAD_REQUEST);
+    }
   }
 }

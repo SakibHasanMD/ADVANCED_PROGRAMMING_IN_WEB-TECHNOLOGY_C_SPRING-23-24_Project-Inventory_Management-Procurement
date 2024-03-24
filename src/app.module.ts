@@ -6,10 +6,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PurchaseOrderModule } from './procurement_officer/Purchase Orders/purchase-order.module';
 import { SupplierModule } from './procurement_officer/Suppliers/supplier.module';
 import { InventoryModule } from './procurement_officer/Inventory/inventory.module';
+import { AuthModule } from './procurement_officer/Auth/auth.module';
 
 @Module({
   
-  imports: [ProcurementModule, PurchaseOrderModule , SupplierModule , InventoryModule , TypeOrmModule.forRoot({
+  imports: [ProcurementModule, PurchaseOrderModule , SupplierModule , InventoryModule , AuthModule , TypeOrmModule.forRoot({
   type: 'postgres',
   host:'localhost',
   port:5432,
