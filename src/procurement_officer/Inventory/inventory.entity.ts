@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { PurchaseOrderEntity } from '../Purchase Orders/purchase-order.entity';
 
 @Entity()
 export class InventoryEntity {
@@ -16,4 +17,7 @@ export class InventoryEntity {
 
   @Column()
   unitPrice: number;
+
+  @ManyToMany(() => PurchaseOrderEntity, purchaseOrder => purchaseOrder.inventoryItems)
+  purchaseOrders: PurchaseOrderEntity[];
 }

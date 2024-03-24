@@ -32,4 +32,9 @@ export class PurchaseOrderController {
   deletePurchaseOrder(@Param('id') id: number): Promise<void> {
     return this.purchaseOrderService.deletePurchaseOrder(id);
   }
+
+  @Get('getbysupplierid/:id')
+  async getPurchaseOrder(@Param('id') id: number) {
+    return this.purchaseOrderService.getPurchaseOrderWithSupplier(id);
+  }
 }

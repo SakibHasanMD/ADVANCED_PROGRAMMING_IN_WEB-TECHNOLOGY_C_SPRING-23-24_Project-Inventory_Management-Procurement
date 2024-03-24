@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable } from 'typeorm';
+import { SupplierEntity } from '../Suppliers/supplier.entity';
+import { InventoryEntity } from '../Inventory/inventory.entity';
 
 @Entity()
 export class PurchaseOrderEntity {
@@ -22,4 +24,11 @@ export class PurchaseOrderEntity {
 
   @Column()
   deliveryDate: Date;
+  
+  @ManyToOne(() => SupplierEntity, supplier => supplier.purchaseOrders)
+  supplier: SupplierEntity;
+
+  @ManyToMany(() => InventoryEntity)
+  @JoinTable()
+  inventoryItems: InventoryEntity[];
 }

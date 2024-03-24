@@ -35,4 +35,12 @@ export class PurchaseOrderService {
     const result = await this.purchaseOrderRepository.delete(id);
 
   }
+
+  async getPurchaseOrderWithSupplier(id: number) {
+    return this.purchaseOrderRepository.findOne({ 
+      where: { id }, 
+      relations: ['supplier'] 
+    });
+  }
+  
 }
